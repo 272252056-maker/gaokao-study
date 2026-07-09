@@ -31,7 +31,7 @@
       line-height: 1.6;
       min-height: 100vh;
     }
-    body { max-width: 480px; margin: 0 auto; padding-bottom: 24px; }
+    body { max-width: 480px; margin: 0 auto; padding-bottom: 32px; }
     .bg-glow {
       position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
@@ -59,7 +59,12 @@
     .header-title p { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
     .breadcrumb { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; font-size: 0.72rem; color: var(--text-dim); }
     .breadcrumb span { color: var(--accent); }
-    .main { padding: 16px; }
+    .main { padding: 16px 16px 24px; }
+    .hero-tip {
+      font-size: 0.78rem; color: var(--text-dim); margin-bottom: 16px;
+      padding: 10px 14px; background: var(--surface); border-radius: 10px;
+      border: 1px solid var(--border); line-height: 1.5;
+    }
     .section-label {
       font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;
       display: flex; align-items: center; gap: 8px;
@@ -78,6 +83,11 @@
     .card-title { font-size: 0.95rem; font-weight: 600; }
     .card-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; }
     .card.full { grid-column: 1 / -1; }
+    .card.lg { padding: 20px 18px; }
+    .card.lg .card-icon { font-size: 2rem; }
+    .card.lg .card-title { font-size: 1.05rem; }
+    .card-row { display: flex; flex-direction: column; gap: 10px; }
+    .card-accent { border-color: rgba(201, 169, 110, 0.35); background: linear-gradient(135deg, var(--surface) 0%, rgba(201,169,110,0.06) 100%); }
     .view { display: none; }
     .view.active { display: block; animation: fadeIn 0.25s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -139,7 +149,15 @@
     .word-index { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 4px; }
     .word-text { font-size: 1.1rem; font-weight: 700; }
     .word-phonetic { font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-top: 2px; }
-    .word-meaning { font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; }
+    .word-meaning { font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; line-height: 1.55; }
+    .word-meta-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .word-meta-chip {
+      font-size: 0.72rem; padding: 5px 10px; border-radius: 8px;
+      background: var(--bg); border: 1px solid var(--border); color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .word-meta-chip strong { color: var(--accent); font-weight: 600; margin-right: 4px; }
+    .word-meta-chip.confuse strong { color: #818cf8; }
     .tts-btn {
       background: var(--accent-soft); border: none; width: 34px; height: 34px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;
@@ -240,6 +258,268 @@
     .alpha-info { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 10px; }
     .quiz-hint { font-size: 0.78rem; color: var(--text-dim); margin-top: 12px; text-align: left; }
     .quiz-tag { display: inline-block; font-size: 0.68rem; padding: 2px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); margin-bottom: 10px; }
+    /* 高考真题 */
+    .gaokao-list { display: flex; flex-direction: column; gap: 10px; }
+    .gaokao-paper-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; cursor: pointer;
+    }
+    .gaokao-paper-card:active { background: var(--surface-2); }
+    .gaokao-paper-card .year { font-size: 0.72rem; color: var(--accent); font-weight: 600; }
+    .gaokao-paper-card .title { font-size: 0.95rem; font-weight: 600; margin-top: 4px; }
+    .gaokao-paper-card .sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+    .gaokao-q {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; margin-bottom: 12px;
+    }
+    .gaokao-q-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .gaokao-q-no { font-weight: 700; color: var(--accent); font-size: 0.85rem; }
+    .gaokao-q-stem { font-size: 0.9rem; line-height: 1.65; margin-bottom: 12px; }
+    .gaokao-q-opt { font-size: 0.85rem; color: var(--text-muted); padding: 6px 0; line-height: 1.5; }
+    .gaokao-explain {
+      display: none; margin-top: 12px; padding: 12px;
+      background: var(--bg); border-radius: 10px; border: 1px solid var(--border);
+      font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
+    }
+    .gaokao-explain.show { display: block; }
+    .gaokao-explain .ans { color: var(--success); font-weight: 600; margin-bottom: 6px; }
+    .gaokao-toggle-btn {
+      background: var(--accent-soft); border: 1px solid rgba(201,169,110,0.3);
+      color: var(--accent); border-radius: 8px; padding: 6px 12px;
+      font-size: 0.78rem; cursor: pointer; font-family: inherit;
+    }
+    .gaokao-section {
+      margin-bottom: 24px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .gaokao-section-name {
+      font-size: 1rem; font-weight: 700; color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .gaokao-section-note { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 12px; }
+    .gaokao-material {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px; margin-bottom: 14px;
+      font-size: 0.84rem; color: var(--text-muted); line-height: 1.75;
+      white-space: pre-wrap;
+    }
+    .gaokao-passage-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; color: var(--text); }
+    .gaokao-passage-label {
+      display: inline-block; background: var(--accent-soft); color: var(--accent);
+      font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px;
+    }
+    .gaokao-writing .gaokao-q-stem { white-space: pre-wrap; }
+    .toolbar-sticky {
+      position: sticky; bottom: 0; z-index: 50;
+      background: rgba(15, 15, 26, 0.95); backdrop-filter: blur(10px);
+      padding: 12px 0 4px; margin-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    /* 首页 */
+    body.is-home .header { border-bottom-color: transparent; background: transparent; backdrop-filter: none; }
+    body.is-home .breadcrumb { display: none; }
+    body.is-home .header-title h1 { font-size: 0.82rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.04em; }
+    body.is-home .header-title p { display: none; }
+    .home-main { padding-top: 4px; }
+    .home-hero {
+      position: relative; border-radius: 20px; overflow: hidden;
+      padding: 22px 20px 20px; margin-bottom: 16px;
+      border: 1px solid rgba(201, 169, 110, 0.22);
+      background:
+        linear-gradient(145deg, rgba(36, 36, 64, 0.95) 0%, rgba(26, 26, 46, 0.98) 55%, rgba(15, 15, 26, 1) 100%);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    }
+    .home-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(201, 169, 110, 0.22) 0%, transparent 42%),
+        radial-gradient(circle at 8% 88%, rgba(99, 102, 241, 0.14) 0%, transparent 40%);
+    }
+    .home-hero-inner { position: relative; z-index: 1; }
+    .home-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .home-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--accent); background: rgba(201, 169, 110, 0.12);
+      border: 1px solid rgba(201, 169, 110, 0.25); border-radius: 999px;
+      padding: 4px 10px; text-transform: uppercase;
+    }
+    .home-date { font-size: 0.72rem; color: var(--text-dim); white-space: nowrap; padding-top: 2px; }
+    .home-title {
+      font-size: 1.65rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f5e6c8 0%, var(--accent) 45%, #a8864a 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .home-greeting { font-size: 0.88rem; color: var(--text-muted); margin-top: 8px; line-height: 1.5; }
+    .home-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px;
+    }
+    .home-stat {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+      padding: 12px 8px; text-align: center;
+    }
+    .home-stat-num { font-size: 1.25rem; font-weight: 700; color: var(--accent); line-height: 1.2; }
+    .home-stat-label { font-size: 0.68rem; color: var(--text-dim); margin-top: 4px; }
+    .home-section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .home-section-head .section-label { margin-bottom: 0; }
+    .home-section-hint { font-size: 0.72rem; color: var(--text-dim); }
+    .home-quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
+    .home-quick-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+      padding: 14px 8px; cursor: pointer; transition: transform 0.15s, border-color 0.15s;
+      font-family: inherit; color: inherit;
+    }
+    .home-quick-btn:active { transform: scale(0.97); background: var(--surface-2); }
+    .home-quick-btn.primary {
+      border-color: rgba(201, 169, 110, 0.35);
+      background: linear-gradient(180deg, rgba(201,169,110,0.12) 0%, var(--surface) 100%);
+    }
+    .home-quick-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+      background: var(--bg); border: 1px solid var(--border);
+    }
+    .home-quick-btn.primary .home-quick-icon { background: rgba(201,169,110,0.15); border-color: rgba(201,169,110,0.25); }
+    .home-quick-label { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+    .home-quick-desc { font-size: 0.62rem; color: var(--text-dim); margin-top: -4px; }
+    .grade-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grade-card {
+      position: relative; border-radius: 16px; overflow: hidden; cursor: pointer;
+      border: 1px solid var(--border); background: var(--surface);
+      min-height: 108px; transition: transform 0.15s;
+    }
+    .grade-card:active:not(.locked) { transform: scale(0.98); }
+    .grade-card.ready {
+      border-color: rgba(201, 169, 110, 0.32);
+      background: linear-gradient(160deg, rgba(201,169,110,0.1) 0%, var(--surface) 45%);
+    }
+    .grade-card.locked { opacity: 0.55; cursor: default; }
+    .grade-card.locked:active { transform: none; }
+    .grade-card-bg {
+      position: absolute; right: -8px; bottom: -12px; font-size: 3.2rem;
+      opacity: 0.12; pointer-events: none; line-height: 1;
+    }
+    .grade-card.ready .grade-card-bg { opacity: 0.2; }
+    .grade-card-body { position: relative; z-index: 1; padding: 16px 14px; height: 100%; display: flex; flex-direction: column; }
+    .grade-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .grade-name { font-size: 1.05rem; font-weight: 700; }
+    .grade-tag {
+      font-size: 0.62rem; font-weight: 600; padding: 3px 8px; border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.25);
+    }
+    .grade-tag.soon { background: rgba(255,255,255,0.04); color: var(--text-dim); border-color: var(--border); }
+    .grade-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: auto; padding-top: 10px; line-height: 1.4; }
+    .grade-card.ready .grade-desc { color: var(--accent); }
+    .home-features {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; margin-bottom: 8px;
+    }
+    .home-feature {
+      font-size: 0.68rem; color: var(--text-dim); padding: 5px 10px;
+      border-radius: 999px; background: var(--surface); border: 1px solid var(--border);
+    }
+    .home-footer {
+      text-align: center; font-size: 0.68rem; color: var(--text-dim);
+      padding: 8px 0 4px; opacity: 0.75;
+    }
+    /* 今日学习 */
+    .today-hero {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 20px; margin-bottom: 16px; text-align: center;
+    }
+    .progress-ring-wrap { position: relative; width: 100px; height: 100px; margin: 0 auto 12px; }
+    .progress-ring-wrap svg { transform: rotate(-90deg); }
+    .progress-ring-bg { fill: none; stroke: var(--surface-2); stroke-width: 8; }
+    .progress-ring-fg { fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.4s; }
+    .progress-ring-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .progress-ring-text .pct { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+    .progress-ring-text .lbl { font-size: 0.65rem; color: var(--text-dim); }
+    .streak-badge {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem;
+      padding: 6px 12px; border-radius: 999px; background: rgba(34,197,94,0.12);
+      color: var(--success); border: 1px solid rgba(34,197,94,0.25); margin-bottom: 12px;
+    }
+    .task-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .task-item {
+      display: flex; align-items: center; gap: 12px; padding: 14px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer;
+    }
+    .task-item.done { opacity: 0.55; }
+    .task-item.done .task-text { text-decoration: line-through; }
+    .task-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .task-body { flex: 1; min-width: 0; }
+    .task-text { font-size: 0.9rem; font-weight: 600; }
+    .task-desc { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; }
+    .task-check {
+      width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0;
+    }
+    .task-item.done .task-check { background: var(--success); border-color: var(--success); }
+    /* 单词卡片学习 */
+    .study-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 28px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column;
+      justify-content: center; margin-bottom: 16px;
+    }
+    .study-word { font-size: 2rem; font-weight: 800; color: var(--accent); }
+    .study-phonetic { font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin-top: 6px; }
+    .study-meaning { font-size: 1rem; color: var(--text); margin-top: 16px; line-height: 1.6; }
+    .study-example { font-size: 0.82rem; color: var(--text-muted); margin-top: 12px; font-style: italic; }
+    .study-progress { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 12px; text-align: center; }
+    .study-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .study-btns .btn-know { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; }
+    .study-btns .btn-unknown { background: var(--surface); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .filter-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+    .filter-tab {
+      padding: 6px 12px; border-radius: 999px; font-size: 0.78rem; cursor: pointer;
+      background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-family: inherit;
+    }
+    .filter-tab.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .wrong-count-badge {
+      display: inline-block; font-size: 0.65rem; padding: 2px 6px; border-radius: 6px;
+      background: rgba(239,68,68,0.15); color: #f87171; margin-left: 6px;
+    }
+    .reading-card, .listening-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px; margin-bottom: 10px; cursor: pointer;
+    }
+    .reading-card:active, .listening-card:active { background: var(--surface-2); }
+    .reading-meta, .listening-meta { font-size: 0.72rem; color: var(--text-dim); margin-top: 6px; }
+    .reading-body, .listening-body { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+    .reading-body p { margin-bottom: 12px; }
+    .vocab-chip {
+      display: inline-block; font-size: 0.75rem; padding: 5px 10px; margin: 4px 4px 0 0;
+      border-radius: 8px; background: var(--bg); border: 1px solid var(--border); cursor: pointer;
+    }
+    .vocab-chip:active { border-color: var(--accent); }
+    .stats-chart { display: flex; align-items: flex-end; gap: 6px; height: 100px; margin: 16px 0; }
+    .stats-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .stats-bar {
+      width: 100%; max-width: 32px; background: var(--accent); border-radius: 4px 4px 0 0;
+      min-height: 4px; transition: height 0.3s;
+    }
+    .stats-bar-label { font-size: 0.6rem; color: var(--text-dim); }
+    .settings-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .settings-row label { font-size: 0.9rem; }
+    .settings-row select {
+      background: var(--surface); border: 1px solid var(--border); color: var(--text);
+      padding: 8px 12px; border-radius: 8px; font-family: inherit;
+    }
+    .plan-item.system { border-color: rgba(201,169,110,0.25); }
+    .plan-item.system .plan-text::before { content: '📌 '; }
+    @media print {
+      body { background: #fff; color: #000; max-width: none; }
+      .bg-glow, .header, .no-print { display: none !important; }
+      .view { display: none !important; }
+      #view-exam.active { display: block !important; }
+      .gaokao-q { break-inside: avoid; border: 1px solid #ddd; color: #222; }
+      .gaokao-explain.show { display: block !important; }
+    }
   </style>
 </head>
 <body>
@@ -256,35 +536,121 @@
       <div class="breadcrumb" id="breadcrumb"></div>
     </header>
 
-    <!-- 首页：年级选择 -->
+    <!-- 首页 -->
     <div class="view active" id="view-home">
-      <div class="main">
-        <div class="section-label">选择年级</div>
-        <div class="grid-2" id="gradeGrid"></div>
+      <div class="main home-main">
+        <section class="home-hero">
+          <div class="home-hero-inner">
+            <div class="home-top">
+              <span class="home-badge">STUDY HUB</span>
+              <span class="home-date" id="homeDate"></span>
+            </div>
+            <h2 class="home-title">高中学习</h2>
+            <p class="home-greeting" id="homeGreeting">加载中…</p>
+          </div>
+        </section>
+
+        <div class="home-stats">
+          <div class="home-stat">
+            <div class="home-stat-num" id="homeStatLearned">0</div>
+            <div class="home-stat-label">已掌握词</div>
+          </div>
+          <div class="home-stat">
+            <div class="home-stat-num" id="homeStatPlans">0</div>
+            <div class="home-stat-label">待完成计划</div>
+          </div>
+          <div class="home-stat">
+            <div class="home-stat-num" id="homeStatWrong">0</div>
+            <div class="home-stat-label">错题待复习</div>
+          </div>
+        </div>
+
+        <div class="home-section-head">
+          <div class="section-label">快捷入口</div>
+          <span class="home-section-hint">高一 · 英语</span>
+        </div>
+        <div class="home-quick" id="homeQuick">
+          <button class="home-quick-btn primary" type="button" data-quick="today">
+            <span class="home-quick-icon">📅</span>
+            <span class="home-quick-label">今日学习</span>
+            <span class="home-quick-desc">任务与进度</span>
+          </button>
+          <button class="home-quick-btn" type="button" data-quick="words">
+            <span class="home-quick-icon">📝</span>
+            <span class="home-quick-label">背单词</span>
+            <span class="home-quick-desc">新词+复习</span>
+          </button>
+          <button class="home-quick-btn" type="button" data-quick="test">
+            <span class="home-quick-icon">✅</span>
+            <span class="home-quick-label">做测试</span>
+            <span class="home-quick-desc">单词·语法</span>
+          </button>
+        </div>
+
+        <div class="home-section-head">
+          <div class="section-label">选择年级</div>
+        </div>
+        <div class="grade-grid" id="gradeGrid"></div>
+
+        <div class="home-features">
+          <span class="home-feature">科学背词</span>
+          <span class="home-feature">阅读听力</span>
+          <span class="home-feature">错题复习</span>
+          <span class="home-feature">学习统计</span>
+        </div>
+        <p class="home-footer">按年级 → 科目 → 模块，循序渐进学习</p>
       </div>
     </div>
 
-    <!-- 年级模块 -->
-    <div class="view" id="view-grade">
+    <!-- 今日学习 -->
+    <div class="view" id="view-today">
       <div class="main">
-        <div class="section-label">学习模块</div>
-        <div class="grid-2" id="moduleGrid"></div>
+        <div class="today-hero" id="todayHero"></div>
+        <div class="section-label">今日任务</div>
+        <div class="task-list" id="todayTasks"></div>
+        <div class="section-label">快捷入口</div>
+        <div class="grid-2" id="todayQuick"></div>
       </div>
     </div>
 
-    <!-- 知识点：科目 -->
+    <!-- 单词学习（新词/复习卡片） -->
+    <div class="view" id="view-word-study">
+      <div class="main">
+        <div class="study-progress" id="studyProgress"></div>
+        <div class="study-card" id="studyCard"></div>
+        <div class="study-btns" id="studyActions" style="display:none">
+          <button class="btn btn-unknown" id="btnUnknown" type="button">不认识</button>
+          <button class="btn btn-know" id="btnKnow" type="button">认识了</button>
+        </div>
+        <div class="btn-row" style="margin-top:12px">
+          <button class="btn btn-secondary" id="btnFlipCard" type="button">显示释义</button>
+          <button class="btn btn-secondary" id="btnSpeakStudy" type="button">🔊 朗读</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 年级 → 科目 -->
     <div class="view" id="view-subjects">
       <div class="main">
+        <div class="hero-tip" id="gradeTip">选择科目，开始今日学习</div>
         <div class="section-label">选择科目</div>
-        <div class="grid-3" id="subjectGrid"></div>
+        <div class="grid-2" id="subjectGrid"></div>
       </div>
     </div>
 
-    <!-- 英语子模块 -->
+    <!-- 英语：计划 / 知识点 / 测试 -->
     <div class="view" id="view-english">
       <div class="main">
-        <div class="section-label">英语 · 知识点</div>
-        <div class="grid-2" id="englishGrid"></div>
+        <div class="section-label">英语 · 学习模块</div>
+        <div class="card-row" id="englishSectionGrid"></div>
+      </div>
+    </div>
+
+    <!-- 英语 · 知识点 -->
+    <div class="view" id="view-knowledge">
+      <div class="main">
+        <div class="section-label">知识点</div>
+        <div class="grid-2" id="knowledgeGrid"></div>
       </div>
     </div>
 
@@ -293,20 +659,23 @@
       <div class="main">
         <input type="search" class="search-box" id="wordSearch" placeholder="搜索单词或中文释义..." />
         <div class="mode-tabs">
-          <button class="mode-tab active" data-word-mode="random" type="button">随机 30 词</button>
-          <button class="mode-tab" data-word-mode="alpha" type="button">A-Z 浏览</button>
+          <button class="mode-tab" data-word-mode="study" type="button">今日学习</button>
+          <button class="mode-tab active" data-word-mode="browse" type="button">词库浏览</button>
+          <button class="mode-tab" data-word-mode="alpha" type="button">A-Z</button>
         </div>
         <div class="alpha-bar" id="alphaBar" hidden></div>
         <div class="alpha-info" id="alphaInfo" hidden></div>
         <div class="word-stats">
-          <div class="stat-card"><div class="stat-num" id="wordCount">30</div><div class="stat-label">今日单词</div></div>
+          <div class="stat-card"><div class="stat-num" id="wordCount">0</div><div class="stat-label">当前列表</div></div>
           <div class="stat-card"><div class="stat-num" id="bankCount">0</div><div class="stat-label">词库总量</div></div>
-          <div class="stat-card"><div class="stat-num" id="learnedCount">0</div><div class="stat-label">已学习</div></div>
+          <div class="stat-card"><div class="stat-num" id="learnedCount">0</div><div class="stat-label">已掌握</div></div>
         </div>
         <div class="word-list" id="wordList"></div>
-        <div class="btn-row">
-          <button class="btn" id="shuffleWords">🔄 换一批</button>
-          <button class="btn btn-secondary" id="hideMeanings">隐藏释义</button>
+        <div class="toolbar-sticky no-print">
+          <div class="btn-row" style="margin-top:0">
+            <button class="btn" id="startWordStudy">📖 开始今日背词</button>
+            <button class="btn btn-secondary" id="hideMeanings">隐藏释义</button>
+          </div>
         </div>
       </div>
     </div>
@@ -352,32 +721,82 @@
       </div>
     </div>
 
-    <!-- 测试 -->
+    <!-- 阅读 -->
+    <div class="view" id="view-reading">
+      <div class="main">
+        <div class="section-label">阅读理解 · 共 10 篇</div>
+        <div id="readingList"></div>
+      </div>
+    </div>
+
+    <!-- 阅读详情 -->
+    <div class="view" id="view-reading-detail">
+      <div class="main" id="readingDetail"></div>
+    </div>
+
+    <!-- 听力 -->
+    <div class="view" id="view-listening">
+      <div class="main">
+        <div class="section-label">听力练习 · 共 5 段</div>
+        <div class="hero-tip" style="margin-bottom:14px">点击播放听录音（浏览器朗读），答题后查看原文与解析</div>
+        <div id="listeningList"></div>
+      </div>
+    </div>
+
+    <!-- 听力详情 -->
+    <div class="view" id="view-listening-detail">
+      <div class="main" id="listeningDetail"></div>
+    </div>
+
+    <!-- 学习统计 -->
+    <div class="view" id="view-stats">
+      <div class="main" id="statsContent"></div>
+    </div>
+
+    <!-- 学习设置 -->
+    <div class="view" id="view-settings">
+      <div class="main" id="settingsContent"></div>
+    </div>
+
+    <!-- 测试（英语下） -->
     <div class="view" id="view-test">
       <div class="main">
-        <div class="section-label">选择测试</div>
+        <div class="section-label">测试练习</div>
         <div class="grid-2">
           <div class="card" data-action="startQuiz">
             <div class="card-icon">🎯</div>
-            <div class="card-title">单词测验</div>
-            <div class="card-desc">随机10题，四选一</div>
+            <div class="card-title">单词测试</div>
+            <div class="card-desc">随机 10 题 · 四选一</div>
           </div>
           <div class="card" data-action="startGrammarQuiz">
             <div class="card-icon">📖</div>
-            <div class="card-title">语法测验</div>
-            <div class="card-desc">10题，四选一</div>
+            <div class="card-title">语法测试</div>
+            <div class="card-desc">随机 10 题 · 四选一</div>
+          </div>
+          <div class="card card-accent" data-action="openGaokao">
+            <div class="card-icon">📋</div>
+            <div class="card-title">历年高考真题</div>
+            <div class="card-desc">听力·阅读·七选五·完形·语法填空·写作</div>
           </div>
           <div class="card" data-action="openWrongBook">
             <div class="card-icon">📕</div>
             <div class="card-title">错题库</div>
             <div class="card-desc"><span id="wrongBookCount">0</span> 道待复习</div>
           </div>
-          <div class="card disabled">
-            <div class="card-icon">📋</div>
-            <div class="card-title">综合测试</div>
-            <div class="card-desc">即将上线</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 历年高考真题及讲解 -->
+    <div class="view" id="view-exam">
+      <div class="main">
+        <div class="no-print" id="gaokaoToolbar" style="margin-bottom:14px">
+          <div class="btn-row" style="margin-top:0">
+            <button class="btn btn-secondary" id="toggleAllExplain" type="button" style="display:none">显示全部解析</button>
+            <button class="btn btn-secondary" id="printGaokao" type="button" style="display:none">🖨 打印</button>
           </div>
         </div>
+        <div id="gaokaoContent"></div>
       </div>
     </div>
 
@@ -392,6 +811,12 @@
     <div class="view" id="view-wrong-book">
       <div class="main">
         <div class="section-label">错题库 · <span id="wrongListCount">0</span> 道</div>
+        <div class="filter-tabs" id="wrongFilters">
+          <button class="filter-tab active" data-wrong-filter="all" type="button">全部</button>
+          <button class="filter-tab" data-wrong-filter="word" type="button">单词</button>
+          <button class="filter-tab" data-wrong-filter="grammar" type="button">语法</button>
+          <button class="filter-tab" data-wrong-filter="reading" type="button">阅读</button>
+        </div>
         <div class="btn-row" style="margin-top:0;margin-bottom:14px">
           <button class="btn" id="reviewWrongBtn" type="button">复习错题</button>
           <button class="btn btn-secondary" id="clearWrongBtn" type="button">清空</button>
@@ -414,7 +839,12 @@
 
   <div class="toast" id="toast"></div>
   <script src="words-data.js"></script>
+  <script src="word-meta.js"></script>
   <script src="grammar.js"></script>
+  <script src="gaokao.js"></script>
+  <script src="learning-core.js"></script>
+  <script src="reading.js"></script>
+  <script src="listening.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -230,3 +230,91 @@ const GRAMMAR_QUIZ = [
   { tag: '从句', q: 'Do you know ___ he lives?', options: ['what', 'where', 'which', 'who'], answer: 1, hint: '宾语从句询问地点用 where' },
   { tag: '非谓语', q: 'It\'s too difficult for me ___.', options: ['understand', 'understanding', 'to understand', 'understood'], answer: 2, hint: 'too ... to do 结构' }
 ];
+
+/** 语法知识点专项练习（topicId → 3～5 题） */
+const GRAMMAR_TOPIC_QUIZ = {
+  'simple-present': [
+    { tag: '一般现在时', q: 'He usually ___ to school by bike.', options: ['go', 'goes', 'going', 'went'], answer: 1, hint: '第三人称单数 + goes' },
+    { tag: '一般现在时', q: 'The earth ___ around the sun.', options: ['move', 'moves', 'moved', 'moving'], answer: 1, hint: '客观真理用一般现在时' },
+    { tag: '一般现在时', q: 'They ___ TV every evening.', options: ['watch', 'watches', 'watched', 'watching'], answer: 0, hint: '复数主语用动词原形' }
+  ],
+  'simple-past': [
+    { tag: '一般过去时', q: 'I ___ my keys at home yesterday.', options: ['leave', 'left', 'have left', 'am leaving'], answer: 1, hint: 'yesterday → 过去式 left' },
+    { tag: '一般过去时', q: 'She ___ happy when she heard the news.', options: ['is', 'was', 'has been', 'will be'], answer: 1, hint: 'heard 是过去时，主句也用过去时' },
+    { tag: '一般过去时', q: 'We ___ to the park last Sunday.', options: ['go', 'went', 'have gone', 'going'], answer: 1, hint: 'last Sunday 用一般过去时' }
+  ],
+  'simple-future': [
+    { tag: '一般将来时', q: 'I ___ call you when I arrive.', options: ['will', 'would', 'was', 'am'], answer: 0, hint: 'when 引导时间状语从句，主句用 will' },
+    { tag: '一般将来时', q: 'Look at the clouds. It ___ rain.', options: ['will', 'is going to', 'rained', 'rains'], answer: 1, hint: '有迹象用 be going to' },
+    { tag: '一般将来时', q: 'They ___ a meeting tomorrow morning.', options: ['have', 'had', 'will have', 'having'], answer: 2, hint: 'tomorrow → 将来时' }
+  ],
+  'present-continuous': [
+    { tag: '现在进行时', q: 'Listen! Someone ___ at the door.', options: ['knocks', 'knocked', 'is knocking', 'has knocked'], answer: 2, hint: 'Listen! 表正在发生' },
+    { tag: '现在进行时', q: 'She ___ an exam paper now.', options: ['writes', 'is writing', 'wrote', 'has written'], answer: 1, hint: 'now → 现在进行时' },
+    { tag: '现在进行时', q: 'What ___ you ___ at the moment?', options: ['do, do', 'are, doing', 'did, do', 'have, done'], answer: 1, hint: 'at the moment 用现在进行时' }
+  ],
+  'present-perfect': [
+    { tag: '现在完成时', q: 'I ___ never ___ such a beautiful place.', options: ['have, seen', 'had, seen', 'am, seeing', 'was, seeing'], answer: 0, hint: 'never 常和现在完成时连用' },
+    { tag: '现在完成时', q: 'She ___ here since 2020.', options: ['lives', 'lived', 'has lived', 'is living'], answer: 2, hint: 'since + 时间点 → 现在完成时' },
+    { tag: '现在完成时', q: '___ you finished your homework yet?', options: ['Do', 'Did', 'Have', 'Are'], answer: 2, hint: 'yet 用于现在完成时疑问句' }
+  ],
+  'past-perfect': [
+    { tag: '过去完成时', q: 'When I got to the station, the train ___.', options: ['left', 'has left', 'had left', 'was leaving'], answer: 2, hint: '过去的过去 → had left' },
+    { tag: '过去完成时', q: 'She told me she ___ the book before.', options: ['read', 'has read', 'had read', 'reads'], answer: 2, hint: 'told 是过去时，之前读完用过去完成时' },
+    { tag: '过去完成时', q: 'By the time he arrived, we ___ dinner.', options: ['finish', 'finished', 'had finished', 'have finished'], answer: 2, hint: 'By the time + 过去时 → 过去完成时' }
+  ],
+  'attributive': [
+    { tag: '定语从句', q: 'The man ___ is talking to our teacher is my father.', options: ['which', 'who', 'where', 'what'], answer: 1, hint: '先行词 man 指人 → who' },
+    { tag: '定语从句', q: 'This is the book ___ I bought yesterday.', options: ['who', 'which', 'where', 'when'], answer: 1, hint: '先行词 book 指物 → which/that' },
+    { tag: '定语从句', q: 'I\'ll never forget the day ___ I first met you.', options: ['which', 'who', 'when', 'where'], answer: 2, hint: '先行词 day 表时间 → when' }
+  ],
+  'noun-clause': [
+    { tag: '名词性从句', q: '___ he said at the meeting surprised everyone.', options: ['What', 'Which', 'That', 'Where'], answer: 0, hint: '主语从句缺"说的内容"→ What' },
+    { tag: '名词性从句', q: 'I wonder ___ she will accept our invitation.', options: ['that', 'if', 'what', 'which'], answer: 1, hint: 'wonder 后"是否"→ if/whether' },
+    { tag: '名词性从句', q: 'The problem is ___ we don\'t have enough time.', options: ['what', 'that', 'which', 'where'], answer: 1, hint: '表语从句陈述事实用 that' }
+  ],
+  'adverbial': [
+    { tag: '状语从句', q: '___ it rains tomorrow, we will stay at home.', options: ['Although', 'If', 'Because', 'So'], answer: 1, hint: '条件状语从句 → If' },
+    { tag: '状语从句', q: 'He was late ___ he missed the bus.', options: ['because', 'although', 'if', 'unless'], answer: 0, hint: '原因 → because' },
+    { tag: '状语从句', q: '___ hard you try, you should never give up.', options: ['However', 'Whatever', 'Whichever', 'Whoever'], answer: 0, hint: 'However hard = No matter how hard' }
+  ],
+  'infinitive': [
+    { tag: '不定式', q: 'She decided ___ abroad for further study.', options: ['go', 'going', 'to go', 'gone'], answer: 2, hint: 'decide to do' },
+    { tag: '不定式', q: 'It\'s important for us ___ English every day.', options: ['practice', 'practicing', 'to practice', 'practiced'], answer: 2, hint: 'It is + adj + for sb + to do' },
+    { tag: '不定式', q: 'Would you like ___ with me?', options: ['come', 'to come', 'coming', 'came'], answer: 1, hint: 'would like to do' }
+  ],
+  'gerund': [
+    { tag: '动名词', q: 'I can\'t imagine ___ without music.', options: ['live', 'to live', 'living', 'lived'], answer: 2, hint: 'imagine doing' },
+    { tag: '动名词', q: '___ English is not easy, but practice helps.', options: ['Learn', 'Learning', 'To learn', 'Learned'], answer: 1, hint: '动名词作主语' },
+    { tag: '动名词', q: 'He admitted ___ the window by mistake.', options: ['break', 'to break', 'breaking', 'broken'], answer: 2, hint: 'admit doing' }
+  ],
+  'participle': [
+    { tag: '分词', q: 'Seen from the hill, the city looks beautiful.', options: ['This is correct', 'Should be "Seeing"', 'Should be "See"', 'Should be "To see"'], answer: 0, hint: '过去分词作状语，city 是被看' },
+    { tag: '分词', q: 'The boy ___ under the tree is reading.', options: ['sit', 'sits', 'sitting', 'sat'], answer: 2, hint: '现在分词作定语表主动' },
+    { tag: '分词', q: 'With the work ___, he went home happily.', options: ['finish', 'finishing', 'finished', 'to finish'], answer: 2, hint: 'with + 名词 + 过去分词' }
+  ],
+  'passive': [
+    { tag: '被动语态', q: 'The classroom ___ every day.', options: ['cleans', 'is cleaned', 'cleaned', 'was cleaning'], answer: 1, hint: 'every day + 被动 → is cleaned' },
+    { tag: '被动语态', q: 'A new school ___ in our town next year.', options: ['builds', 'built', 'will be built', 'is building'], answer: 2, hint: 'next year + 被动 → will be built' },
+    { tag: '被动语态', q: 'The letter ___ by hand.', options: ['was written', 'wrote', 'writes', 'is writing'], answer: 0, hint: '信是被写的 → 被动' }
+  ],
+  'subjunctive-mood': [
+    { tag: '虚拟语气', q: 'I wish I ___ taller.', options: ['am', 'was', 'were', 'be'], answer: 2, hint: 'wish + 与现在相反 → were' },
+    { tag: '虚拟语气', q: 'If he ___ harder, he would pass the exam.', options: ['studied', 'studies', 'will study', 'has studied'], answer: 0, hint: 'If did, would do' },
+    { tag: '虚拟语气', q: 'If I ___ you, I would apologize first.', options: ['am', 'was', 'were', 'be'], answer: 2, hint: 'If I were you 固定搭配' }
+  ],
+  'subject-verb': [
+    { tag: '主谓一致', q: 'The number of students ___ increasing.', options: ['is', 'are', 'were', 'have'], answer: 0, hint: 'the number of → 单数' },
+    { tag: '主谓一致', q: 'Not only he but also I ___ interested in science.', options: ['is', 'am', 'are', 'be'], answer: 1, hint: '就近原则：I → am' },
+    { tag: '主谓一致', q: 'Ten dollars ___ enough for lunch.', options: ['is', 'are', 'were', 'have'], answer: 0, hint: '金额/时间/距离作主语常视为单数' }
+  ]
+};
+
+function getGrammarQuizByTopic(topicId) {
+  return GRAMMAR_TOPIC_QUIZ[topicId] || [];
+}
+
+function findGrammarTopic(catId, topicId) {
+  const cat = GRAMMAR_CATEGORIES.find(c => c.id === catId);
+  return cat?.topics.find(t => t.id === topicId) || null;
+}
